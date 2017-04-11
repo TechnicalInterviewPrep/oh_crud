@@ -92,7 +92,7 @@ CREATE SEQUENCE brewery_id_seq
 ALTER SEQUENCE brewery_id_seq OWNED BY brewery.id;
 
 --
--- Name: inventory; Type: TABLE; Schema: public; Tablespace:
+-- Name: deposit; Type: TABLE; Schema: public; Tablespace:
 --
 
 CREATE TABLE deposit (
@@ -119,7 +119,7 @@ CREATE SEQUENCE deposit_id_seq
 -- Name: deposit_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
 --
 
-ALTER SEQUENCE deposit_id_seq OWNED BY inventory.id;
+ALTER SEQUENCE deposit_id_seq OWNED BY deposit.id;
 
 --
 -- Name: id; Type: DEFAULT; Schema: public;
