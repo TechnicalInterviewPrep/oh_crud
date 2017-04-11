@@ -10,14 +10,14 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -91,6 +91,35 @@ CREATE SEQUENCE brewery_id_seq
 
 ALTER SEQUENCE brewery_id_seq OWNED BY brewery.id;
 
+--
+-- Name: inventory; Type: TABLE; Schema: public; Tablespace:
+--
+
+CREATE TABLE deposit (
+    id integer NOT NULL,
+    beer text,
+    beer_id integer,
+    amount integer NOT NULL
+);
+
+
+--
+-- Name: deposit_id_seq; Type: SEQUENCE; Schema: public;
+--
+
+CREATE SEQUENCE deposit_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: deposit_id_seq; Type: SEQUENCE OWNED BY; Schema: public;
+--
+
+ALTER SEQUENCE deposit_id_seq OWNED BY inventory.id;
 
 --
 -- Name: id; Type: DEFAULT; Schema: public;
@@ -104,6 +133,13 @@ ALTER TABLE ONLY beer ALTER COLUMN id SET DEFAULT nextval('beer_id_seq'::regclas
 --
 
 ALTER TABLE ONLY brewery ALTER COLUMN id SET DEFAULT nextval('brewery_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public;
+--
+
+ALTER TABLE ONLY deposit ALTER COLUMN id SET DEFAULT nextval('deposit_id_seq'::regclass);
 
 
 --
@@ -2231,6 +2267,21 @@ COPY brewery (id, name) FROM stdin;
 
 SELECT pg_catalog.setval('brewery_id_seq', 360, true);
 
+--
+-- Data for Name: deposit; Type: TABLE DATA; Schema: public;
+--
+
+COPY deposit (id, beer, beer_id, amount) FROM stdin;
+1	Kastaar	803	2
+2	Applebocq	76	3
+\.
+
+--
+-- Name: deposit_id_seq; Type: SEQUENCE SET; Schema: public;
+--
+
+SELECT pg_catalog.setval('deposit_id_seq', 2, true);
+
 
 --
 -- Name: beer_pkey; Type: CONSTRAINT; Schema: public; Tablespace:
@@ -2251,4 +2302,3 @@ ALTER TABLE ONLY brewery
 --
 -- PostgreSQL database dump complete
 --
-
